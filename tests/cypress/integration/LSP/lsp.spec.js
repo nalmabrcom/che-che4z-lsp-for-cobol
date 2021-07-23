@@ -81,14 +81,20 @@ context('This is a LSP spec', () => {
   });
 
   describe('TC152048 Cobol file is recognized by LSP', () => {
-    it(['smoke', 'CI'], 'Cobol file is recognized by LSP - Cobol type is shown in status bar', () => {
+    beforeEach(() => {
+      cy.updateConfigs('basic');
+    });
+    it(['smoke'], 'Cobol file is recognized by LSP - Cobol type is shown in status bar', () => {
       cy.openFile('USER1.cbl');
       cy.get('.right.area .hasCommand[title="Select Language Mode"]').should('contain.text', 'COBOL');
     });
   });
 
   describe('TC152049 Navigate through definitions', () => {
-    it(['smoke', 'CI'], 'Checks behavior of go to definition action', () => {
+    beforeEach(() => {
+      cy.updateConfigs('basic');
+    });
+    it(['smoke'], 'Checks behavior of go to definition action', () => {
       cy.openFile('USER1.cbl');
       cy.getLineByNumber(29).findText('100-Print-User.').wait(5000).goToDefinition();
       cy.getCurrentLineNumber().should('eq', 32);
@@ -151,7 +157,7 @@ context('This is a LSP spec', () => {
   });
 
   describe('TC152051 Syntax Errors have more detailed hints', () => {
-    it(['smoke'], 'Syntax Errors have more detailed hints', () => {
+    it(['smoke', 'CI'], 'Syntax Errors have more detailed hints', () => {
       cy.openFile('USER2.cbl');
       cy.get('.squiggly-error')
         .getElementLineNumber()
